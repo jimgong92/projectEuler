@@ -24,22 +24,31 @@ function greatestRowSeries(grid, size){
 
 function greatestColumnSeries(grid, size){
   var product = 0;
-  var seriesCoord = [];
   var numCols = grid[0].length;
   for (var i = 0; i < numCols; i++){
     for (var j = 0; j < grid.length - size; j++){
       var series = 1;
-      var coordinates = [i]
       for (var seriesI = j; seriesI < j + size; seriesI++){
-        coordinates.push(seriesI);
         series *= grid[seriesI][i];
       }
       if (series > product) {
-        seriesCoord = coordinates;
         product = series;
       }
     }
   }
-  console.log(seriesCoord);
   return product;
+}
+
+/**
+ * Top-Left to bottom-right
+ */
+function greatestMajorDiagonalSeries(grid, size){
+
+}
+
+/**
+ * Top-right to bottom-left
+ */
+function greatestMinorDiagonalSeries(grid, size){
+
 }
