@@ -1,9 +1,13 @@
 function solver(grid, size){
   var horizontal = greatestRowSeries(grid, size);
+  var series = horizontal;
   var vertical = greatestColumnSeries(grid, size);
+  series = Math.max(horizontal, vertical);
   var majDiag = greatestMajorDiagonalSeries(grid, size);
+  series = Math.max(series, majDiag);
   var minDiag = greatestMinorDiagonalSeries(grid, size);
-  return minDiag;
+  series = Math.max(series, minDiag);
+  return series;
 }
 
 function greatestRowSeries(grid, size){
