@@ -1,7 +1,9 @@
 function solver(grid, size){
   var horizontal = greatestRowSeries(grid, size);
   var vertical = greatestColumnSeries(grid, size);
-  return horizontal;
+  var majDiag = greatestMajorDiagonalSeries(grid, size);
+  var minDiag = greatestMinorDiagonalSeries(grid, size);
+  return minDiag;
 }
 
 function greatestRowSeries(grid, size){
@@ -24,9 +26,9 @@ function greatestRowSeries(grid, size){
 
 function greatestColumnSeries(grid, size){
   var product = 0;
-  var numCols = grid[0].length;
+  var numCols = grid[0].length, numRows = grid.length;
   for (var i = 0; i < numCols; i++){
-    for (var j = 0; j < grid.length - size; j++){
+    for (var j = 0; j < numRows - size; j++){
       var series = 1;
       for (var seriesI = j; seriesI < j + size; seriesI++){
         series *= grid[seriesI][i];
@@ -43,12 +45,40 @@ function greatestColumnSeries(grid, size){
  * Top-Left to bottom-right
  */
 function greatestMajorDiagonalSeries(grid, size){
-
+  var product = 0;
+  var numCols = grid[0].length, numRows = grid.length;
+  for (var col = 0; col < numCols - size; col++){
+    for (var row = 0; row < numRows - size; row++){
+      var series = 1;
+      var currCol = col;
+      for (var seriesRow = row; seriesRow < row + size; seriesRow++){
+        series *= grid[seriesRow][currCol++];
+      }
+      if (series > product) {
+        product = series;
+      }
+    }
+  }
+  return product;
 }
 
 /**
  * Top-right to bottom-left
  */
 function greatestMinorDiagonalSeries(grid, size){
-
+  var product = 0;
+  var numCols = grid[0].length, numRows = grid.length;
+  for (var col = size - 1; col < numCols; col++){
+    for (var row = 0; row < numRows - size; row++){
+      var series = 1;
+      var currCol = col;
+      for (var seriesRow = row; seriesRow < row + size; seriesRow++){
+        series *= grid[seriesRow][currCol--];
+      }
+      if (series > product) {
+        product = series;
+      }
+    }
+  }
+  return product;
 }
